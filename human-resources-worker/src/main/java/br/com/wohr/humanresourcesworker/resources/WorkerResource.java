@@ -22,10 +22,10 @@ public class WorkerResource {
 
 	@Autowired
 	private WorkerRepository repository;
-	
+
 	@Autowired
 	private Environment environment;
-	
+
 	private static Logger logger = LoggerFactory.getLogger(WorkerResource.class);
 
 	@GetMapping
@@ -35,9 +35,20 @@ public class WorkerResource {
 
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Worker> findById(@PathVariable Long id) throws Exception {
+		
+//		try {
+//			System.out.println("############ executou1 ############");
+//			Thread.sleep(3000L);
+//			System.out.println("############ executou2 ############");
+//			
+//		} catch (InterruptedException e) {
+//			
+//			e.printStackTrace();
+//			
+//		}
 		
 		logger.info("PORT = " + environment.getProperty("local.server.port"));
 
