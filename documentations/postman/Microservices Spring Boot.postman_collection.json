@@ -14,13 +14,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8001/workers",
+							"raw": "http://localhost:8765/human-resources-worker/workers",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8765",
 							"path": [
+								"human-resources-worker",
 								"workers"
 							]
 						}
@@ -33,19 +34,135 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8001/workers/2",
+							"raw": "http://localhost:8765/human-resources-worker/workers/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8765",
 							"path": [
+								"human-resources-worker",
 								"workers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show worker configs on console",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8765/human-resources-worker/workers/configs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"human-resources-worker",
+								"workers",
+								"configs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actuator Refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8765/human-resources-worker/actuator/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"human-resources-worker",
+								"actuator",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "human-resources-user",
+			"item": [
+				{
+					"name": "User by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8765/human-resources-user/users/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"human-resources-user",
+								"users",
 								"2"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "User by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8765/human-resources-user/users/search?email=nina@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"human-resources-user",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "nina@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -58,17 +175,83 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8101/payments/3/days/20",
+							"raw": "http://localhost:8765/human-resources-payroll/payments/1/days/20",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8101",
+							"port": "8765",
 							"path": [
+								"human-resources-payroll",
 								"payments",
-								"3",
+								"1",
 								"days",
 								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "human-resources-config-server",
+			"item": [
+				{
+					"name": "human-resources-worker configs dafault profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/human-resources-worker/default",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"human-resources-worker",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "human-resources-worker configs test profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/human-resources-worker/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"human-resources-worker",
+								"test"
 							]
 						}
 					},
