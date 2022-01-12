@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "84451ed2-2777-417f-b0ff-d20d2e950c82",
+		"_postman_id": "50a44e10-1ac8-4f86-8a09-dbf30fbc2159",
 		"name": "Microservices Spring Boot",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,15 +11,23 @@
 				{
 					"name": "All Workers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-worker/workers",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-worker/workers",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-worker",
 								"workers"
@@ -31,15 +39,23 @@
 				{
 					"name": "Worker by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-worker/workers/1",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-worker/workers/1",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-worker",
 								"workers",
@@ -52,15 +68,23 @@
 				{
 					"name": "Show worker configs on console",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-worker/workers/configs",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-worker/workers/configs",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-worker",
 								"workers",
@@ -73,15 +97,23 @@
 				{
 					"name": "Actuator Refresh",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-worker/actuator/refresh",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-worker/actuator/refresh",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-worker",
 								"actuator",
@@ -99,15 +131,23 @@
 				{
 					"name": "User by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-user/users/2",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-user/users/2",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-user",
 								"users",
@@ -120,15 +160,23 @@
 				{
 					"name": "User by email",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-user/users/search?email=nina@gmail.com",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-user/users/search?email=nina@gmail.com",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-user",
 								"users",
@@ -175,12 +223,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-oauth/users/search?email=nina@gmail.com",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-oauth/users/search?email=nina@gmail.com",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-oauth",
 								"users",
@@ -198,18 +244,33 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    postman.setEnvironmentVariable('token', json.access_token);\r",
+									"    postman.setEnvironmentVariable('bearerToken', json.token_type + \" \" + json.access_token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": [
 								{
-									"key": "username",
-									"value": "myappname123",
+									"key": "password",
+									"value": "{{client-secret}}",
 									"type": "string"
 								},
 								{
-									"key": "password",
-									"value": "myappsecret123",
+									"key": "username",
+									"value": "{{client-name}}",
 									"type": "string"
 								}
 							]
@@ -221,12 +282,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "nina@gmail.com",
+									"value": "{{username}}",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "123456",
+									"value": "{{password}}",
 									"type": "text"
 								},
 								{
@@ -237,12 +298,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8765/human-resources-oauth/oauth/token",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-oauth/oauth/token",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-oauth",
 								"oauth",
@@ -280,15 +339,23 @@
 				{
 					"name": "Payment",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8765/human-resources-payroll/payments/1/days/20",
-							"protocol": "http",
+							"raw": "{{api-gateway}}/human-resources-payroll/payments/1/days/20",
 							"host": [
-								"localhost"
+								"{{api-gateway}}"
 							],
-							"port": "8765",
 							"path": [
 								"human-resources-payroll",
 								"payments",
@@ -328,15 +395,23 @@
 				{
 					"name": "human-resources-worker configs dafault profile",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8888/human-resources-worker/default",
-							"protocol": "http",
+							"raw": "{{config-host}}/human-resources-worker/default",
 							"host": [
-								"localhost"
+								"{{config-host}}"
 							],
-							"port": "8888",
 							"path": [
 								"human-resources-worker",
 								"default"
@@ -348,15 +423,23 @@
 				{
 					"name": "human-resources-worker configs test profile",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8888/human-resources-worker/test",
-							"protocol": "http",
+							"raw": "{{config-host}}/human-resources-worker/test",
 							"host": [
-								"localhost"
+								"{{config-host}}"
 							],
-							"port": "8888",
 							"path": [
 								"human-resources-worker",
 								"test"
