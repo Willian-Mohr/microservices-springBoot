@@ -2,124 +2,124 @@
 
 ## Criar rede docker para sistema hr
 ```
-docker network create hr-net
+docker network create human-resources-net
 ```
 
 ## Testando perfil dev com Postgresql no Docker
 ```
-docker pull postgres:12-alpine
+docker pull postgres:14-alpine
 
-docker run -p 5432:5432 --name hr-worker-pg12 --network hr-net -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=db_hr_worker postgres:12-alpine
+docker run -p 5432:5432 --name human-resources-worker-pg14 --network human-resources-net -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=db_human_resources_worker postgres:12-alpine
 
-docker run -p 5432:5432 --name hr-user-pg12 --network hr-net -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=db_hr_user postgres:12-alpine
+docker run -p 5433:5432 --name human-resources-user-pg14 --network human-resources-net -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=db_human_resources_user postgres:12-alpine
 ```
 
-## hr-config-server
+## human-resources-config-server
 ```
 FROM openjdk:11
 VOLUME /tmp
 EXPOSE 8888
-ADD ./target/hr-config-server-0.0.1-SNAPSHOT.jar hr-config-server.jar
-ENTRYPOINT ["java","-jar","/hr-config-server.jar"]
+ADD ./target/human-resources-config-server-0.0.1-SNAPSHOT.jar human-resources-config-server.jar
+ENTRYPOINT ["java","-jar","/human-resources-config-server.jar"]
 ``` 
 ```
 mvnw clean package
 
-docker build -t hr-config-server:v1 .
+docker build -t human-resources-config-server:v1 .
 
-docker run -p 8888:8888 --name hr-config-server --network hr-net -e GITHUB_USER=acenelio -e GITHUB_PASS= hr-config-server:v1
+docker run -p 8888:8888 --name human-resources-config-server --network human-resources-net -e GITHUB_USER=%GITHUB_USER% -e GITHUB_PASS_KEY=%GITHUB_PASS% human-resources-config-server:v1
 ```
 
-## hr-eureka-server
+## human-resources-eureka-server
 ```
 FROM openjdk:11
 VOLUME /tmp
 EXPOSE 8761
-ADD ./target/hr-eureka-server-0.0.1-SNAPSHOT.jar hr-eureka-server.jar
-ENTRYPOINT ["java","-jar","/hr-eureka-server.jar"]
+ADD ./target/human-resources-eureka-server-0.0.1-SNAPSHOT.jar human-resources-eureka-server.jar
+ENTRYPOINT ["java","-jar","/human-resources-eureka-server.jar"]
 ``` 
 ```
 mvnw clean package
 
-docker build -t hr-eureka-server:v1 .
+docker build -t human-resources-eureka-server:v1 .
 
-docker run -p 8761:8761 --name hr-eureka-server --network hr-net hr-eureka-server:v1
+docker run -p 8761:8761 --name human-resources-eureka-server --network human-resources-net human-resources-eureka-server:v1
 ```
 
-## hr-worker
+## human-resources-worker
 ```
 FROM openjdk:11
 VOLUME /tmp
-ADD ./target/hr-worker-0.0.1-SNAPSHOT.jar hr-worker.jar
-ENTRYPOINT ["java","-jar","/hr-worker.jar"]
+ADD ./target/human-resources-worker-0.0.1-SNAPSHOT.jar human-resources-worker.jar
+ENTRYPOINT ["java","-jar","/human-resources-worker.jar"]
 ``` 
 ```
 mvnw clean package -DskipTests
 
-docker build -t hr-worker:v1 .
+docker build -t human-resources-worker:v1 .
 
-docker run -P --network hr-net hr-worker:v1
+docker run -P --network human-resources-net human-resources-worker:v1
 ```
 
-## hr-user
+## human-resources-user
 ```
 FROM openjdk:11
 VOLUME /tmp
-ADD ./target/hr-user-0.0.1-SNAPSHOT.jar hr-user.jar
-ENTRYPOINT ["java","-jar","/hr-user.jar"]
+ADD ./target/human-resources-user-0.0.1-SNAPSHOT.jar human-resources-user.jar
+ENTRYPOINT ["java","-jar","/human-resources-user.jar"]
 ``` 
 ```
 mvnw clean package -DskipTests
 
-docker build -t hr-user:v1 .
+docker build -t human-resources-user:v1 .
 
-docker run -P --network hr-net hr-user:v1
+docker run -P --network human-resources-net human-resources-user:v1
 ```
 
-## hr-payroll
+## human-resources-payroll
 ```
 FROM openjdk:11
 VOLUME /tmp
-ADD ./target/hr-payroll-0.0.1-SNAPSHOT.jar hr-payroll.jar
-ENTRYPOINT ["java","-jar","/hr-payroll.jar"]
+ADD ./target/human-resources-payroll-0.0.1-SNAPSHOT.jar human-resources-payroll.jar
+ENTRYPOINT ["java","-jar","/human-resources-payroll.jar"]
 ``` 
 ```
 mvnw clean package -DskipTests
 
-docker build -t hr-payroll:v1 .
+docker build -t human-resources-payroll:v1 .
 
-docker run -P --network hr-net hr-payroll:v1
+docker run -P --network human-resources-net human-resources-payroll:v1
 ```
 
-## hr-oauth
+## human-resources-oauth
 ```
 FROM openjdk:11
 VOLUME /tmp
-ADD ./target/hr-oauth-0.0.1-SNAPSHOT.jar hr-oauth.jar
-ENTRYPOINT ["java","-jar","/hr-oauth.jar"]
+ADD ./target/human-resources-oauth-0.0.1-SNAPSHOT.jar human-resources-oauth.jar
+ENTRYPOINT ["java","-jar","/human-resources-oauth.jar"]
 ``` 
 ```
 mvnw clean package -DskipTests
 
-docker build -t hr-oauth:v1 .
+docker build -t human-resources-oauth:v1 .
 
-docker run -P --network hr-net hr-oauth:v1
+docker run -P --network human-resources-net human-resources-oauth:v1
 ```
 
-## hr-api-gateway-zuul
+## human-resources-api-gateway-zuul
 ```
 FROM openjdk:11
 VOLUME /tmp
 EXPOSE 8765
-ADD ./target/hr-api-gateway-zuul-0.0.1-SNAPSHOT.jar hr-api-gateway-zuul.jar
-ENTRYPOINT ["java","-jar","/hr-api-gateway-zuul.jar"]
+ADD ./target/human-resources-api-gateway-zuul-0.0.1-SNAPSHOT.jar human-resources-api-gateway-zuul.jar
+ENTRYPOINT ["java","-jar","/human-resources-api-gateway-zuul.jar"]
 ``` 
 ```
 mvnw clean package -DskipTests
 
-docker build -t hr-api-gateway-zuul:v1 .
+docker build -t human-resources-api-gateway-zuul:v1 .
 
-docker run -p 8765:8765 --name hr-api-gateway-zuul --network hr-net hr-api-gateway-zuul:v1
+docker run -p 8765:8765 --name human-resources-api-gateway-zuul --network human-resources-net human-resources-api-gateway-zuul:v1
 ```
 
 ## Alguns comandos Docker
