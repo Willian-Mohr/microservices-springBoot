@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.wohr</groupId>
-	<artifactId>humanresourcespayroll</artifactId>
+	<artifactId>human-resources-payroll</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>human-resources-payroll</name>
 	<description>Payroll Microsservices (Microservices project for student purposes)</description>
