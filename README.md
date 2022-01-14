@@ -23,11 +23,11 @@ ADD ./target/human-resources-config-server-0.0.1-SNAPSHOT.jar human-resources-co
 ENTRYPOINT ["java","-jar","/human-resources-config-server.jar"]
 ``` 
 ```
-mvnw clean package
+./mvnw clean package
 
 docker build -t human-resources-config-server:v1 .
 
-docker run -p 8888:8888 --name human-resources-config-server --network human-resources-net -e GITHUB_USER=%GITHUB_USER% -e GITHUB_PASS_KEY=%GITHUB_PASS% human-resources-config-server:v1
+docker run -p 8888:8888 --name human-resources-config-server --network human-resources-net -e GITHUB_USER=${GITHUB_USER} -e GITHUB_PASS_KEY=${GITHUB_PASS_KEY} human-resources-config-server:v1
 ```
 
 ## human-resources-eureka-server
@@ -39,7 +39,7 @@ ADD ./target/human-resources-eureka-server-0.0.1-SNAPSHOT.jar human-resources-eu
 ENTRYPOINT ["java","-jar","/human-resources-eureka-server.jar"]
 ``` 
 ```
-mvnw clean package
+./mvnw clean package
 
 docker build -t human-resources-eureka-server:v1 .
 
@@ -54,7 +54,7 @@ ADD ./target/human-resources-worker-0.0.1-SNAPSHOT.jar human-resources-worker.ja
 ENTRYPOINT ["java","-jar","/human-resources-worker.jar"]
 ``` 
 ```
-mvnw clean package -DskipTests
+./mvnw clean package -DskipTests
 
 docker build -t human-resources-worker:v1 .
 
@@ -69,7 +69,7 @@ ADD ./target/human-resources-user-0.0.1-SNAPSHOT.jar human-resources-user.jar
 ENTRYPOINT ["java","-jar","/human-resources-user.jar"]
 ``` 
 ```
-mvnw clean package -DskipTests
+./mvnw clean package -DskipTests
 
 docker build -t human-resources-user:v1 .
 
@@ -84,7 +84,7 @@ ADD ./target/human-resources-payroll-0.0.1-SNAPSHOT.jar human-resources-payroll.
 ENTRYPOINT ["java","-jar","/human-resources-payroll.jar"]
 ``` 
 ```
-mvnw clean package -DskipTests
+./mvnw clean package -DskipTests
 
 docker build -t human-resources-payroll:v1 .
 
@@ -99,7 +99,7 @@ ADD ./target/human-resources-oauth-0.0.1-SNAPSHOT.jar human-resources-oauth.jar
 ENTRYPOINT ["java","-jar","/human-resources-oauth.jar"]
 ``` 
 ```
-mvnw clean package -DskipTests
+./mvnw clean package -DskipTests
 
 docker build -t human-resources-oauth:v1 .
 
@@ -115,7 +115,7 @@ ADD ./target/human-resources-api-gateway-zuul-0.0.1-SNAPSHOT.jar human-resources
 ENTRYPOINT ["java","-jar","/human-resources-api-gateway-zuul.jar"]
 ``` 
 ```
-mvnw clean package -DskipTests
+./mvnw clean package -DskipTests
 
 docker build -t human-resources-api-gateway-zuul:v1 .
 
